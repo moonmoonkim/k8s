@@ -1,0 +1,35 @@
+[all]
+
+
+%{~ for index, ip in control-ips ~}
+control${format("%02d", index + 1)} ansible_host=${ip} ip=${ip} %{ if index == 0 }%{ endif }
+
+%{~ endfor ~}
+
+%{~ for index, ip in worker-ips ~}
+worker${format("%02d", index + 1)} ansible_host=${ip} ip=${ip}
+
+%{~ endfor ~}
+
+[bastion]
+ansible-bastion ansible_host=ansible-bastion ansible_user=centos
+
+[devonly]
+
+control01
+
+%{~ for index, ip in worker-ips ~}
+worker${format("%02d", index + 1)}
+
+%{~ endfor ~}
+
+[first_control_plane]
+control01
+
+[worker_node]
+
+%{~ for index, ip in worker-ips ~}
+worker${format("%02d", index + 1)}
+
+%{~ endfor ~}
+

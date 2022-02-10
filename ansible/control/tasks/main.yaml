@@ -1,0 +1,16 @@
+---
+- name: "Install packages"
+  block:
+    # - name: "private key copy"
+    #   ansible.builtin.copy:
+    #     src: /home-mc/moonmoon.kim/Documents/moonmoon/kubernetes/aws/terraform/aws_keys/k8s_rsa_node
+    - name: "tranfer file"
+      become: yes
+      template:
+        src: master_node.sh
+        dest: /home/centos/
+        mode: +x
+    - name: "execute master_node sh"
+      become: yes
+      shell: /home/centos/master_node.sh
+    

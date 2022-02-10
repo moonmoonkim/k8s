@@ -1,0 +1,13 @@
+---
+- name: "Install packages"
+  block:
+    - name: "tranfer file"
+      become: yes
+      template:
+        src: work_nodes.sh
+        dest: /home/centos/
+        mode: +x
+    - name: "execute work_nodes"
+      become: yes
+      shell: /home/centos/work_nodes.sh
+     

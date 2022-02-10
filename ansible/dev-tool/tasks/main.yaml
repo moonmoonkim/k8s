@@ -1,0 +1,147 @@
+---
+- name: "Install packages"
+  block:
+    - name: "tranfer file"
+      become: yes
+      template:
+        src: config.sh
+        dest: /home/centos/
+        mode: +x
+    - name: "execute config sh"
+      become: yes
+      shell: /home/centos/config.sh
+      async: 15
+      poll: 5
+    - name: "tranfer file"
+      become: yes
+      template:
+        src: install_pkg.sh
+        dest: /home/centos/
+        mode: +x
+    - name: "execute config sh"
+      become: yes
+      shell: /home/centos/install_pkg.sh
+    # - name: "yum update & yum install pkgs.."
+    #   become: yes
+    #   yum:
+    #     name: '*'
+    #     state: latest
+    #     update_cache: yes
+    #     update_only: yes
+
+# - name: "ZSH & dev tools"
+#   block:
+#     - name: "change shell"
+#       become: true
+#       user:
+#         name: "centos"
+#         shell: /bin/zsh
+
+#     - name: "Creates directory"
+#       file:
+#       path: /home/centos/Downloads
+#       state: directory
+
+#     - name: "make download dir"
+#       ansible.builtin.file:
+#         path: /home/centos/Downloads
+#         state: directory
+
+#     - name: "download oh-my-zsh install scripts"
+#       become: true
+#       get_url: 
+#         url: https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+#         dest: /home/centos/Downloads/ohmyzsh-install.sh
+#         mode: '0755'
+
+#     - name: "check oh-my-zsh"
+#       stat:
+#         path: /home/centos/.oh-my-zsh
+#       register: ohmyzsh_installed
+
+#     - name: "execute the oh-my-zsh install scripts"
+#       shell: /home/centsos/Downloads/ohmyzsh-install.sh
+#       async: 15
+#       poll: 5
+#       register: omz_install_result
+#       when: not ohmyzsh_installed.stat.exists
+#       changed_when: omz_install_result.finished == 1
+ 
+#     # - name: "show output oh-my-zsh isntall scripts"
+#     #   debug:
+#     #     msg: "{{ omz_install_result }}"
+
+#     - name: "git clone fzf"
+#       git:
+#         repo: https://github.com/junegunn/fzf.git
+#         depth: 1
+#         dest: /home/centos/Downloads/fzf/
+#     - name: "install fzf"
+#       shell: /home/centos/Downloads/fzf/install --key-bindings --completion --update-rc
+
+#     - name: "git clone fasd"
+#       git:
+#         repo: https://github.com/clvv/fasd.git
+#         depth: 1
+#         dest: /home/centos/Downloads/fasd/
+#     - name: "install fasd"
+#       become: true
+#       command:
+#         cmd: make install
+#         chdir: /home/centos/Downloads/fasd/
+
+#     - name: "zsh-autosuggestions"
+#       git:
+#         repo: https://github.com/zsh-users/zsh-autosuggestions
+#         dest: /home/centos/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+#     # - name: "git clone direnv"
+#     #   git:
+#     #     repo: https://github.com/direnv/direnv.git
+#     #     dest: /home/ubuntu/Downloads/direnv
+#     #
+#     # - name: "install direnv"
+#     #   command:
+#     #     cmd: make
+#     #     chdir: /home/ubuntu/Downloads/direnv
+#     #   ignore_errors: yes
+#     #
+#     # - name: "install direnv"
+#     #   become: true
+#     #   command:
+#     #     cmd: make install
+#     #     chdir: /home/ubuntu/Downloads/direnv
+#     #   ignore_errors: yes
+
+#     - name: "render zshrc"
+#       template:
+#         src: zshrc.j2
+#         dest: /home/centos/.zshrc
+    
+# - name: "Install vim related"
+#   block:
+#     - name: "git vim vundle"
+#       git:
+#         repo: https://github.com/VundleVim/Vundle.vim.git
+#         dest: /home/centos/.vim/bundle/Vundle.vim
+    
+#     - name: "make download dir"
+#       ansible.builtin.file:
+#         path: /home/centos/.vim/colors
+#         state: directory
+
+#     - name: "download colorscheme vim"
+#       get_url:
+#         url: https://raw.githubusercontent.com/nanotech/jellybeans.vim/master/colors/jellybeans.vim
+#         dest: /home/centos/.vim/colors
+
+#     - name: "render vimrc"
+#       template: 
+#         src: vimrc.j2
+#         dest: /home/centos/.vimrc
+
+#     - name: "vim plugin install"
+#       command:
+#         cmd: vim +PluginInstall +qall
+
+

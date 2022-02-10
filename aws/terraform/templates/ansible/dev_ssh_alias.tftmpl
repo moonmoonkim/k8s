@@ -1,0 +1,9 @@
+%{~ for index, dns in control_private_ips ~}
+alias gocontrol${format("%02d", index + 1)}='ssh -F ${project_path}/dev_ssh_config ${dns}'
+
+%{~ endfor ~}
+
+%{~ for index, dns in worker_private_ips ~}
+alias goworker${format("%02d", index + 1)}='ssh -F ${project_path}/dev_ssh_config ${dns}'
+
+%{~ endfor ~}

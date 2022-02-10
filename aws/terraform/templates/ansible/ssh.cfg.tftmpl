@@ -1,0 +1,14 @@
+# for ansible
+Host ansible-bastion
+  HostName ${public_dns_bastion}
+  IdentityFile ${bastion_key_path}
+  User centos
+  Port 22
+  ControlPath ~/.ssh/ansible-%r@%h:%p
+  ControlPersist 5m
+
+Host 172.*
+  ProxyJump ansible-bastion
+  IdentityFile ${project_path}/${node_key_path}
+  User centos
+  Port 22

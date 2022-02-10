@@ -32,4 +32,7 @@ locals {
   #ami
   ami_common_id = var.ami_common_id
 
+  #local-files
+  ansible_dir_path = "${path.root}/../../ansible"
+  root_dir_path = "${path.root}/../.."
 }

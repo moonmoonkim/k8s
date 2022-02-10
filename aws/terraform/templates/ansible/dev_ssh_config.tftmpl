@@ -1,0 +1,26 @@
+ControlMaster auto
+Protocol 2
+
+# The following can also be specified in the host-based sections below.
+ForwardX11 yes
+ForwardX11Trusted yes
+ForwardAgent yes
+
+Host bastion
+  HostName ${public_dns_bastion}
+  IdentityFile ${bastion_key_path}
+  User centos
+  Port 22
+
+Host ec*
+  ProxyJump bastion
+  IdentityFile ${project_path}/${node_key_path}
+  User centos
+  Port 22
+
+Host 172.*
+  ProxyJump bastion
+  IdentityFile ${project_path}/${node_key_path}
+  User centos
+  Port 22
+

@@ -8,6 +8,11 @@ variable "project_name" {
   description = "project name"
 }
 
+variable "project_path" {
+  type = string
+  description = "project root path"
+}
+
 variable "vpc_name" {
     default = "vpc"
 }
@@ -92,12 +97,13 @@ variable "sg_worker_name" {
 
 # AMI
 variable "ami_common_id" {
-  default = "ami-06e7b9c5e0c4dd014"
+  # default = "ami-06e7b9c5e0c4dd014"
+  default = "ami-06e83aceba2cb0907"
   description = "common ami"
 }
 
 variable "destination_path" {
-  default = "/home/ubuntu/id_rsa_node"
+  default = "/home/centos/id_rsa_node"
 }
 
 variable "eip_bastion" {
@@ -107,7 +113,7 @@ variable "eip_bastion" {
 
 # { START_CONTROL_PLANE_NODE_VARIABLES
 variable "num_k8s_cp_instances" {
-  default = 3
+  default = 1
   description = "number of k8s-control-plane instances"
 }
 
@@ -134,7 +140,7 @@ variable "worker_name" {
 }
 
 variable "num_k8s_worker_instances" {
-  default = 2
+  default = 3
   description = "number of k8s-worker instances"
 }
 # FINISH_WORKER_NODE_VARIABLES }

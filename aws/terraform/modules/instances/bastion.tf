@@ -4,7 +4,8 @@ resource "aws_instance" "bastion" {
   ami                       = var.ami_common_id
   instance_type             = var.bastion_instance_type
   availability_zone         = var.target_azs[count.index % length(var.target_azs)]
-  key_name                  = var.key_name_bastion
+  # key_name                  = var.key_name_bastion
+  key_name = "BASTION"
 
   vpc_security_group_ids = [
     var.bastion_sg_id
@@ -30,23 +31,26 @@ resource "aws_eip_association" "bastion" {
   instance_id = aws_instance.bastion[count.index].id
 }
 
-# resource "null_resource" "private" {
-#   count = var.bastion_count
+resource "null_resource" "private" {
+  count = var.bastion_count
 
-#   connection {
-#     type = "ssh"
-#     user = var.ssh_user
-#     host = data.aws_instance.bastion.public_dns
-#     private_key = "${file("${var.local_file_path_bastion}")}"
-#   }
+  connection {
+    type = "ssh"
+    user = var.ssh_user
+    host = data.aws_instance.bastion.public_dns
+    # private_key = "${file("${var.local_file_path_bastion}")}"
+    private_key = "${file("/home-mc/moonmoon.kim/Downloads/BASTION.pem")}"
+    
 
-#   provisioner "file" {
-#     source      = "${var.local_file_path_node}"
-#     destination = var.destination_path
-#   }
+  }
 
-#   depends_on = [ aws_eip_association.bastion ]
-# }
+  provisioner "file" {
+    source      = "${var.local_file_path_node}"
+    destination = var.destination_path
+  }
+
+  depends_on = [ aws_eip_association.bastion ]
+}
 
 
 data "aws_instance" "bastion" {

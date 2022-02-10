@@ -19,11 +19,10 @@ variable "test_instance_type" {
   default = "t2.micro"
 }
 
-# variable "key_name_node" {
-#   type = string
-#   description = "Key pair name for node instances"
-#   default = "spc-onboarding-key"
-# }
+variable "key_name_node" {
+  type = string
+  description = "Key pair name for node instances"
+}
 
 variable "key_name_bastion" {
   type = string
@@ -117,10 +116,10 @@ variable "eip_bastion" {
   description = "Default EIP for bastion server"
 }
 
-# variable "ssh_user" {
-#   default = "ubuntu"
-#   description = "The User name for Connection"
-# }
+variable "ssh_user" {
+  default = "centos"
+  description = "The User name for Connection"
+}
 
 variable "destination_path" {
   type = string
@@ -135,54 +134,54 @@ variable "ami_common_id" {
 
 
 # { START_CONTROL_PLANE_NODE_VARIABLES
-# variable "num_k8s_cp_instances" {
-#   type = number
-#   description = "number of k8s-control-plane instances"
-# }
+variable "num_k8s_cp_instances" {
+  type = number
+  description = "number of k8s-control-plane instances"
+}
 
-# variable "k8s_cp_vol_type" {
-#   type        = string
-#   description = "root volume type of k8s-control-plane instances"
-# }
+variable "k8s_cp_vol_type" {
+  type        = string
+  description = "root volume type of k8s-control-plane instances"
+}
 
-# variable "k8s_cp_vol_size" {
-#   type        = number
-#   description = "root volume size of k8s-control-plane instances"
-# }
+variable "k8s_cp_vol_size" {
+  type        = number
+  description = "root volume size of k8s-control-plane instances"
+}
 
-# variable "cp_sg_id" {
-#   type = string
-#   description = "Security Group ID for control plane"
-# }
+variable "cp_sg_id" {
+  type = string
+  description = "Security Group ID for control plane"
+}
 
-# variable "tag_cp_name" {
-#   type = string
-#   description = "Control Plane name of tags"
-# }
+variable "tag_cp_name" {
+  type = string
+  description = "Control Plane name of tags"
+}
 
 # FINISH_CONTROL_PLANE_NODE_VARIABLES }
 
 # {START_WORKER_NODE_VARIABLES
-# variable "num_k8s_worker_instances" {
-#   type = number
-#   description = "number of k8s-worker instances"
-# }
+variable "num_k8s_worker_instances" {
+  type = number
+  description = "number of k8s-worker instances"
+}
 
-# variable "tag_worker_name" {
-#   type = string
-#   description = "Worker node name of tags"
-# }
+variable "tag_worker_name" {
+  type = string
+  description = "Worker node name of tags"
+}
 
-# variable "worker_sg_id" {
-#   type = string
-#   description = "Security Group ID for worker"
-# }
+variable "worker_sg_id" {
+  type = string
+  description = "Security Group ID for worker"
+}
 
 # variable "iam_role_name" {
 #   type = string
 #   description = "role name for s3 access policy"
 # }
-# # FINISH_WORKER_NODE_VARIABLES }
+# FINISH_WORKER_NODE_VARIABLES }
 
 # # { START_WORKER_SECONDARY_VARIABLES
 # variable "k8s_worker_secondary_vol_type" {

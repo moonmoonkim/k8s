@@ -23,18 +23,18 @@ output "public_ip_bastion" {
     value = aws_instance.bastion[0].public_ip
 }
 
-# output "k8s_cp_ips" {
-#     value = aws_instance.k8s-control-plane.*.private_ip
-# }
+output "k8s_cp_ips" {
+    value = aws_instance.k8s-control-plane.*.private_ip
+}
 
-# output "k8s_worker_ips" {
-#     value = aws_instance.k8s-worker.*.private_ip
-# }
+output "k8s_worker_ips" {
+    value = aws_instance.k8s-worker.*.private_ip
+}
 
-# output "k8s_cp_public_dns" {
-#     value = aws_instance.k8s-control-plane.*.public_dns
-# }
+output "k8s_cp_public_dns" {
+    value = aws_instance.k8s-control-plane.*.public_dns
+}
 
-# output "k8s_worker_public_dns" {
-#     value = aws_instance.k8s-worker.*.public_dns
-# }
+output "k8s_worker_public_dns" {
+    value = aws_instance.k8s-worker.*.public_dns
+}

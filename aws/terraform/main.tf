@@ -111,25 +111,25 @@ module "instances" {
   # haproxy_count             = local.min_num_aws_instance_haproxy
   # tag_haproxy_name          = local.tag_haproxy_name
   # eip_haproxy_ids           = local.eip_haproxy_ids
-  # key_name_node             = module.key-pairs.key_name_node
+  key_name_node             = module.key-pairs.key_name_node
   
   # #control plan node
-  # tag_cp_name               = local.tag_cp_name
-  # k8s_cp_vol_type           = var.k8s_cp_vol_type
-  # k8s_cp_vol_size           = var.k8s_cp_vol_size
-  # num_k8s_cp_instances      = var.num_k8s_cp_instances
-  # k8s_cp_instance_type      = var.k8s_cp_instance_type
+  tag_cp_name               = local.tag_cp_name
+  k8s_cp_vol_type           = var.k8s_cp_vol_type
+  k8s_cp_vol_size           = var.k8s_cp_vol_size
+  num_k8s_cp_instances      = var.num_k8s_cp_instances
+  k8s_cp_instance_type      = var.k8s_cp_instance_type
   
-  # cp_sg_id                  = module.security-groups.cp_sg_id
-  # rt_depends_on = [
-  #   module.route-tables,
-  # ]
+  cp_sg_id                  = module.security-groups.cp_sg_id
+  rt_depends_on = [
+    module.route-tables,
+  ]
 
   # #worker node
-  # tag_worker_name           = local.tag_worker_name
-  # num_k8s_worker_instances  = var.num_k8s_worker_instances
-  # k8s_worker_instance_type  = var.k8s_worker_instance_type
-  # worker_sg_id              = module.security-groups.worker_sg_id
+  tag_worker_name           = local.tag_worker_name
+  num_k8s_worker_instances  = var.num_k8s_worker_instances
+  k8s_worker_instance_type  = var.k8s_worker_instance_type
+  worker_sg_id              = module.security-groups.worker_sg_id
   # iam_role_name             = module.iam-instance-profiles.name
 
   # #worker secondary
@@ -138,3 +138,28 @@ module "instances" {
   # k8s_worker_secondary_vol_iops = var.k8s_worker_secondary_vol_iops
   # tag_ws_name                   = local.tag_ws_name
 }
+
+module "local-files" {
+  source = "./modules/local-files"
+
+  ansible_dir_path = local.ansible_dir_path
+  root_dir_path = local.root_dir_path
+  # kubespray_dir_path = local.kubespray_dir_path
+  # haproxy_ips = module.instances.haproxy_ips
+  k8s_cp_ips = module.instances.k8s_cp_ips
+  k8s_worker_ips = module.instances.k8s_worker_ips
+  # haproxy_public_dns = module.addresses.haproxy_public_dns
+  k8s_cp_public_dns = module.instances.k8s_cp_public_dns
+  k8s_worker_public_dns = module.instances.k8s_worker_public_dns
+
+  # key-pair path
+  build_dir_path = local.build_dir_path
+  ssh_private_key_name = var.ssh_private_key_name
+  public_dns_bastion = module.instances.public_dns_bastion
+  user_id = var.user_id
+  project_path = var.project_path
+
+  # s3_bucket_name = local.bucket_name
+}
+
+

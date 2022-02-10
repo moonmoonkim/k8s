@@ -1,0 +1,37 @@
+---
+- name: Create authority between server and nodes
+  hosts: devonly # /etc/ansible/hosts에 nodes에 대한 정보를 읽어들여서 nodes에서 실행하는 것이 아니라
+  # connection: local # 목적지를 local(ansible-server)로 잡아서 실행 
+  # serial: 1  # 실행되는 태스크를 한 개씩 진행하라는 의미, 성능이 좋은 시스템의 경우 빠른 진행으로 겹치는 경우가 발생하므로 설정한 옵션
+  # gather_facts: no
+
+  tasks:
+    # - name: ssh-keyscan for known_hosts file
+    #   command: /usr/bin/ssh-keyscan -t ecdsa {{ ansible_host }} # "{{ ansible_host }}"라는 변수에 nodes를 불러와
+    #   register: keyscan # command에서 확인된 noeds의 키값을 "keyscan"이라는 변수에 저장
+
+    # - name: input key
+    #   lineinfile:      
+    #     path: ~/.ssh/known_hosts
+    #     line: "{{ item }}" # keyscan 변수의 값이 stdout_lines으로 출력되면 known_hosts파일에 한줄씩 저장
+    #     create: yes     
+    #   with_items:
+    #     - "{{ keyscan.stdout_lines }}" 
+      
+    - name: "include_role dev-tool"
+      include_role:
+        name: dev-tool
+
+- name: "Config in control"
+  hosts: first_control_plane
+  tasks:
+    - name: "make user config dir"
+      include_role:
+        name: control
+
+- name: "Config in worker"
+  hosts: worker_node
+  tasks:
+    - name: "make user config dir"
+      include_role:
+        name: worker

@@ -1,0 +1,33 @@
+# Path to your oh-my-zsh installation.
+export ZSH="/home/ubuntu/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+
+# plugins
+plugins=(git)
+plugins=(zsh-autosuggestions)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=yellow'
+source $ZSH/oh-my-zsh.sh
+
+# User configuration 
+# alias zshconfig="mate ~/.zshrc" 
+# alias ohmyzsh="mate ~/.oh-my-zsh" 
+alias ll='ls -alFG' 
+alias la='ls -A' 
+alias l='ls -CF' 
+ 
+eval "$(fasd --init auto)" 
+alias a='fasd -a'        # any 
+alias s='fasd -si'       # show / search / select 
+alias d='fasd -d'        # directory 
+alias f='fasd -f'        # file 
+alias sd='fasd -sid'     # interactive directory selection 
+alias sf='fasd -sif'     # interactive file selection 
+alias z='fasd_cd -d'     # cd, same functionality as j in autojump 
+alias zz='fasd_cd -d -i' # cd with interactive selection 
+
+alias k=kubectl
+
+{% raw %}PROMPT='%(!.%{%F{yellow}%}.)$USER@%{$fg[white]%}%M %{$fg_bold[red]%}➜%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}% %{$reset_color%}'{% endraw %}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
