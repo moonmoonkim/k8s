@@ -21,6 +21,19 @@ resource "aws_security_group_rule" "cp-ingress-6443" {
   description = "kube-apiserver"
 }
 
+resource "aws_security_group_rule" "cp-ingress-8080" {
+  security_group_id = aws_security_group.cp.id
+
+  type = "ingress"
+  from_port = 8080
+  to_port = 8080
+  protocol = "tcp"
+  cidr_blocks = [
+    var.vpc_cidr_block
+  ]
+  description = "kube-apiserver"
+}
+
 resource "aws_security_group_rule" "cp-ingress-etcd" {
   security_group_id = aws_security_group.cp.id
 
@@ -98,4 +111,19 @@ resource "aws_security_group_rule" "cp-ingress-8472" {
   ]
   description = "flannel overlay network(vxlan backend)"
 }
+
+resource "aws_security_group_rule" "cp-ingress-icmp" {
+  security_group_id = aws_security_group.cp.id
+
+  type = "ingress"
+  from_port = -1
+  to_port = -1
+  protocol = "icmp"
+  cidr_blocks = [
+    var.vpc_cidr_block
+  ]
+  description = "icmp"
+}
+
+
 

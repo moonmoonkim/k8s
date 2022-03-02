@@ -59,3 +59,30 @@ resource "aws_security_group_rule" "worker-ingress-flannel-vxlan" {
   ]
   description = "flannel overlay network(vxlan backend)"
 }
+
+resource "aws_security_group_rule" "worker-ingress-http" {
+  security_group_id = aws_security_group.worker.id
+
+  type = "ingress"
+  from_port = 80
+  to_port = 80
+  protocol = "tcp"
+  cidr_blocks = [
+    var.private_cidr_block[0]
+  ]
+  description = "http"
+}
+
+
+resource "aws_security_group_rule" "worker-icmp" {
+  security_group_id = aws_security_group.worker.id
+
+  type = "ingress"
+  from_port = -1
+  to_port = -1
+  protocol = "icmp"
+  cidr_blocks = [
+    var.vpc_cidr_block
+  ]
+  description = "icmp"
+}

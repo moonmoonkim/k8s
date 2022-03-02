@@ -10,8 +10,6 @@
     - name: "execute config sh"
       become: yes
       shell: /home/centos/config.sh
-      async: 15
-      poll: 5
     - name: "tranfer file"
       become: yes
       template:

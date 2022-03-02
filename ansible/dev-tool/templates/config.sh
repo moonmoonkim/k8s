@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+yum update -y
+yum install vi
+yum install vim
 
 # vim configuration 
 echo 'alias vi=vim' >> /etc/profile
@@ -32,10 +35,10 @@ EOF
 modprobe br_netfilter
 
 # local small dns & vagrant cannot parse and delivery shell code.
-echo "172.31.5.213" >> /etc/hosts
-echo "172.31.5.81" >> /etc/hosts
-echo "172.31.5.31" >> /etc/hosts
-echo "172.31.5.154" >> /etc/hosts
+echo "172.31.5.118 m" >> /etc/hosts
+echo "172.31.5.138 w1" >> /etc/hosts
+echo "172.31.5.6 w2" >> /etc/hosts
+echo "172.31.5.207 w3" >> /etc/hosts
 
 # config DNS  
 cat <<EOF > /etc/resolv.conf
